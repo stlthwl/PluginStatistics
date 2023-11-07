@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between">
+        <div class="p-2 bd-highlight">
+            <h3>Статистика использования плагинов в ИСУП</h3>
+        </div>
+        <div class="p-2 bd-highlight">
+            <span class="align-middle">Период: {{min_date}} - {{max_date}}</span>
+        </div>
+    </div>
+</div>
+<br>
+<div id="carouselExampleDark" class="carousel carousel-dark slide">
+    <div class="carousel-indicators">
+        {% for i in pages %}
+        <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="{{i - 1}}" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+        {% endfor %}
+    </div>
+    <div class="carousel-inner" style="width: 100%;">
+
+        {% for j in pages %}
+        <div class="carousel-item {% if j == 1 %}active{% endif %}" data-bs-interval="10000">
+            <div class="container">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Плагин</th>
+                        <th scope="col">Тип</th>
+                        <th scope="col">Описание</th>
+                        <th scope="col">Кол-во вызовов</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for line in sorted_data['row_num'] %}
+                    {% if sorted_data.iloc[line -1][5] == j %}
+                    <tr>
+                        {% if sorted_data.iloc[line -1][3] != 0 %}
+                        <td>{{line}}</td>
+                        {% else %}
+                        <td class="text-danger">{{line}}</td>
+                        {% endif %}
+                        {% if sorted_data.iloc[line -1][3] != 0 %}
+                        <td>{{ sorted_data.iloc[line -1][0] }}</td>
+                        {% else %}
+                        <td class="text-danger">{{ sorted_data.iloc[line -1][0] }}</td>
+                        {% endif %}
+                        {% if sorted_data.iloc[line -1][3] != 0 %}
+                        <td>{{ sorted_data.iloc[line -1][1] }}</td>
+                        {% else %}
+                        <td class="text-danger">{{ sorted_data.iloc[line -1][1] }}</td>
+                        {% endif %}
+                        {% if sorted_data.iloc[line -1][3] != 0 %}
+                        <td>{{ sorted_data.iloc[line -1][2] }}</td>
+                        {% else %}
+                        <td class="text-danger">{{ sorted_data.iloc[line -1][2] }}</td>
+                        {% endif %}
+                        {% if sorted_data.iloc[line -1][3] != 0 %}
+                        <td>{{ sorted_data.iloc[line -1][3] }}</td>
+                        {% else %}
+                        <td class="text-danger">{{ sorted_data.iloc[line -1][3] }}</td>
+                        {% endif %}
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="fw-bold">Всего: {{ total_calls }}</td>
+                    </tr>
+                </table>
+
+                <p>Страница {{ j }}/{{ total_pages }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Предыдущий</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Следующий</span>
+    </button>
+</div>
+
+{% endblock %}
