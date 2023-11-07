@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from get_dataframe import sorted_dataframe, full_dataframe
+from max_dates import get_max_date
 import datetime
 
 
@@ -46,6 +47,15 @@ async def index(request: Request):
         min_date = datetime.datetime.strftime(full_data['date_time_tech'].min(), '%d.%m.%Y')
         max_date = datetime.datetime.strftime(full_data['date_time_tech'].max(), '%d.%m.%Y')
 
+        full_data_df = full_dataframe()
+        sorted_data_df = sorted_dataframe()
+        max_dates_lst = get_max_date(full_data_df, sorted_data_df)
+        res_max_dates_lst = []
+        for name in list(sorted_data['plugin_name']):
+            for i, j in enumerate(max_dates_lst):
+                if name == j[0]:
+                    res_max_dates_lst.append(j[-1])
+        sorted_data['max_dates'] = res_max_dates_lst
         return templates.TemplateResponse("index.html", {
             "request": request,
             "sorted_data": sorted_data,

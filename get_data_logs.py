@@ -2,7 +2,6 @@ import os
 import datetime
 from plugins_conf import plugins, plugin_types
 
-
 # Путь к файлам логов бэка
 backend_logs_path = os.listdir('RegistryService/')
 
@@ -42,7 +41,8 @@ def get_logs():
                         else:
                             plugin_type_rus = 'undefined'
 
-                        logs_list_backend.append([date_time_call, plugin_type, plugin_name, description, date, date_time, plugin_type_rus])
+                        logs_list_backend.append(
+                            [date_time_call, plugin_type, plugin_name, description, date, date_time, plugin_type_rus])
 
         # Запись логов фронта
         for log_file in frontend_logs_path:
@@ -70,7 +70,8 @@ def get_logs():
                     else:
                         plugin_type_rus = 'undefined'
 
-                    logs_list_frontend.append([date_time_call, plugin_type, plugin_name, description, date, date_time, plugin_type_rus])
+                    logs_list_frontend.append(
+                        [date_time_call, plugin_type, plugin_name, description, date, date_time, plugin_type_rus])
 
         concated = logs_list_backend + logs_list_frontend
         # df = pd.DataFrame(concated)
@@ -81,5 +82,3 @@ def get_logs():
         return concated
     except Exception as _ex:
         return f'Ошибка:\n {_ex}'
-
-

@@ -16,13 +16,6 @@ def full_dataframe():
             df.columns[6]: "plugin_type_rus",
         })
         df['row_num'] = list(range(1, len(df) + 1))
-
-        # sorted_df = df.sort_values(by=['date_time_tech'], ascending=False, ignore_index=True)
-        # sorted_df['row_num'] = list(range(1, len(sorted_df) + 1))
-        # grouped_df = sorted_df.groupby(['plugin_name', 'plugin_type_rus', 'plugin_description']).count()
-        # reset_index_df = grouped_df.reset_index()
-        # sorted_df = reset_index_df.sort_values(by='row_num', ascending=False, ignore_index=True)
-
         return df
     except Exception as _ex:
         return f"Ошибка\n{_ex}"
